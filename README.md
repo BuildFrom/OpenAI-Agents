@@ -1,5 +1,8 @@
 ## POST /api/v1/agents/command
 
+## Note:
+To enable, function_tool, tool, and handoffs, you need to set official OPENAI_API_KEY
+
 ### Description:
 This endpoint allows you to interact with the assistant agent to process a command by providing a prompt. The assistant will generate a response based on the provided prompt.
 
