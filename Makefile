@@ -1,17 +1,16 @@
 # ==============================================================================
 # Define dependencies
 # ==============================================================================
-MEETX_APP       := fastagents
+AGENTS_APP       := fastagents
 BASE_IMAGE_NAME := insidious000
 VERSION         := 0.1.0 # Look up pyproject.toml for version; this is just for Docker
-API_IMAGE       := $(BASE_IMAGE_NAME)/$(MEETX_APP):$(VERSION)
 
 # ==============================================================================
 # General Commands
 # ==============================================================================
 
 init:
-	poetry new $(MEETX_APP)
+	poetry new $(AGENTS_APP)
 
 track-tree:
 	poetry show --tree
@@ -69,51 +68,3 @@ version-help:
 	@echo "  preminor     Bump preminor version (0.X.0a0)"
 	@echo "  premajor     Bump premajor version (X.0.0a0)"
 	@echo "  prerelease   Bump prerelease version (0.0.0aX)"
-
-# ==============================================================================
-# Docker
-# ==============================================================================
-
-docker-build: meetx
-
-meetx:
-	docker build \
-		-f zarf/docker/dockerfile.meetx \
-		-t $(API_IMAGE) \
-		--build-arg BUILD_REF=$(VERSION) \
-		--build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
-		.
-
-docker-run:
-	docker run -d \
-		--name meetx-api \
-		-p 8080:8080 \
-		$(API_IMAGE)
-
-docker-push:
-	# Log in to Docker
-	docker login
-
-	# Build and push the Docker image
-	docker build \
-		--platform=linux/amd64 \
-		-f zarf/docker/dockerfile.genai \
-		-t $(API_IMAGE) \
-		--build-arg BUILD_REF=$(VERSION) \
-		--build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
-		.
-	docker push insidious000/meetx-genai-service:$(VERSION)
-	
-	# Build and push the latest image as well
-	docker build \
-		--platform=linux/amd64 \
-		-f zarf/docker/dockerfile.genai \
-		-t $(API_IMAGE) \
-		-t $(BASE_IMAGE_NAME)/$(MEETX_APP):latest \
-		--build-arg BUILD_REF=$(VERSION) \
-		--build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
-		.
-	docker push insidious000/meetx-genai-service:latest
-
-# UVICORN command (commented out)
-# uvicorn main:app --reload
