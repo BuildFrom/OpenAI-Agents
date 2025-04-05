@@ -1,4 +1,4 @@
-## POST /api/v1/agents/command
+## POST http://0.0.0.0:9000/api/v1/agents/command
 
 ### Description:
 This endpoint allows you to interact with the assistant agent to process a command by providing a prompt. The assistant will generate a response based on the provided prompt.
