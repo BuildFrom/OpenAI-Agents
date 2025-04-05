@@ -1,8 +1,9 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from src.blueprint import router
+
 
 def create_app():
     app = FastAPI()

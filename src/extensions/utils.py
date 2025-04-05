@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from agents import OpenAIChatCompletionsModel, AsyncOpenAI
+from agents import AsyncOpenAI, OpenAIChatCompletionsModel
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 
