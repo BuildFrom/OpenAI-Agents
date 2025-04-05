@@ -1,0 +1,110 @@
+[metadata]
+license_file = "LICENSE"
+description-file = "README.md"
+
+[project]
+name = "fastagents"
+version = "3.0.0"
+description = ""
+authors = [
+    {name = "Shohin Abd", email = "shohin@example.com"}
+]
+
+readme = "README.md"
+
+requires-python = ">=3.11.6"
+
+dependencies = [
+    "uvicorn[standard] (>=0.34.0,<0.35.0)",
+    "colorama (>=0.4.6,<0.5.0)",
+    "load-dotenv (>=0.1.0,<0.2.0)",
+    "pydantic (>=2.10.6,<3.0.0)",
+    "openai-agents (>=0.0.7,<0.1.0)",
+]
+
+[tool.ruff]
+fix = true
+line-length = 120
+target-version = 'py39'
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".eggs",
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "docs",
+    "math_utils\\.py$",
+    "setup_*.py",
+    "env",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "C90",   # mccabe
+    "N",     # pep8-naming
+    "I",     # isort
+    "F",     # pyflakes
+    "ASYNC", # flake8-async
+    "Q",     # flake8-quotes
+    "SIM",   # flake8-simplify
+    "RUF022", # Sort __all__
+]
+
+ignore = [
+    "E501", "F403", "C901",
+    "E402", "E721", "ASYNC109",
+    "D100", "D101", "D102", "D103", "D104",
+    "C901",  # too complex
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+# Mypy-specific settings, not for ruff
+strict = true
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+plugins = ["pydantic.mypy"]
+
+# remove after all files in the repo are fixed
+follow_imports = "silent"
+
+# From https://blog.wolt.com/engineering/2021/09/30/professional-grade-mypy-configuration/
+disallow_untyped_defs = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+show_error_codes = true
+warn_unused_ignores = false
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_any_unimported = true
+
+[tool.poetry.dependencies]
+fastapi = "^0.115.7"
+uvicorn = "^0.34.0"
+colorama = "^0.4.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.3"
