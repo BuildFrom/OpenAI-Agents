@@ -63,3 +63,31 @@ async def run_triage_agent(request: PromptRequest):
         return {"output": result.final_output}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+4. EXPERIMENTAL, MAY CHANGE
+
+class MyGuardrailOutput(BaseModel):
+    is_general: bool
+    reasoning: str
+
+
+class UserContext(BaseModel):
+    name: str | None = None
+
+guardrail_agent = Agent( 
+    name="Guardrail check",
+    instructions="Check if the user is asking you a request that is related to ...",
+    output_type=MyGuardrailOutput,
+)
+
+@input_guardrail
+async def general_guardrail( 
+    ctx: RunContextWrapper[UserContext], agent: Agent, input: str | list[TResponseInputItem]
+) -> GuardrailFunctionOutput:
+    result = await Runner.run(guardrail_agent, input, context=ctx.context)
+
+    return GuardrailFunctionOutput(
+        output_info=result.final_output, 
+        tripwire_triggered=not result.final_output.is_general,
+    )

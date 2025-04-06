@@ -55,5 +55,20 @@ A JSON object containing the prompt for the agent. The prompt should describe th
 }
 ```
 
+## MCP Servers 
 
+### Filesystem Tools:
+- read_file
+- read_multiple_files
+- write_file
+- edit_file
+- create_directory
+- list_directory
+- directory_tree
+- move_file
+- search_files
+- get_file_info
+- list_allowed_directories
 
+### PostgreSQL Tools:
+- Read only query

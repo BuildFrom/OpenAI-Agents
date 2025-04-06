@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from agents import AsyncOpenAI, OpenAIChatCompletionsModel
+from agents.mcp import MCPServerStdio
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 
@@ -18,6 +19,13 @@ def get_llm():
         return model
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in getting model: {str(e)}")
+
+async def mcp_server(command: str, args: list[str]):
+    """Generic initializer for any MCP server"""
+    async with MCPServerStdio(params={"command": command, "args": args}) as server:
+        tools = await server.list_tools()
+        tool_details = [{"name": tool.name, "description": tool.description} for tool in tools]
+        return tools, tool_details
 
 
 def get_uuid():
