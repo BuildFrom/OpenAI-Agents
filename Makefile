@@ -28,7 +28,7 @@ dev-install:
 	poetry add --dev ruff
 
 reqs:
-		pip3 install -r requirements.txt --index-url https://pypi.doubanio.com/simple/pip3 install -r requirements.txt
+	pip3 install -r requirements.txt --index-url https://pypi.doubanio.com/simple/pip3 install -r requirements.txt
 
 run:
 	# Stop any process using port 9000

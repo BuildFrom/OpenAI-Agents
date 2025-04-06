@@ -20,6 +20,7 @@ dependencies = [
     "load-dotenv (>=0.1.0,<0.2.0)",
     "pydantic (>=2.10.6,<3.0.0)",
     "openai-agents (>=0.0.7,<0.1.0)",
+    "openai (>=1.70.0,<2.0.0)",
 ]
 
 [tool.ruff]
